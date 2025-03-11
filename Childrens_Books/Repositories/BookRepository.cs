@@ -1,4 +1,5 @@
-﻿using KidsBooks.Data;
+﻿using KidsBooks.Controllers;
+using KidsBooks.Data;   
 using KidsBooks.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,5 +19,15 @@ namespace KidsBooks.Repositories
         {
             return await _context.Books.ToListAsync();
         }
+
+        Task IBookRepository.GetAllBooksAsync()
+        {
+            return GetAllBooksAsync();
+        }
+    }
+
+    internal class AppDbContext
+    {
+        public object Books { get; internal set; }
     }
 }

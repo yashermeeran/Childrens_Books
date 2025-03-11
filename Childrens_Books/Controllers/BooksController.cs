@@ -26,4 +26,9 @@ namespace KidsBooks.Controllers
             return Ok(books);
         }
     }
+
+    internal interface IBookRepository
+    {
+        Task GetAllBooksAsync();
+    }
 }

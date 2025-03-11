@@ -1,3 +1,4 @@
+using KidsBooks.Controllers;
 using KidsBooks.Data;
 using KidsBooks.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Database connection
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContext<KidsBooks.Data.AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Register repository
