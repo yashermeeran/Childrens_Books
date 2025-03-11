@@ -15,20 +15,47 @@ namespace KidsBooks.Controllers
             _bookRepository = bookRepository;
         }
 
-        /// <summary>
-        /// Fetch all books.
-        /// </summary>
-        /// <returns>List of books.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Book>>> GetAllBooks()
         {
             var books = await _bookRepository.GetAllBooksAsync();
             return Ok(books);
         }
-    }
 
-    internal interface IBookRepository
-    {
-        Task GetAllBooksAsync();
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Book>> GetBookById(int id)
+        {
+            var book = await _bookRepository.GetBookByIdAsync(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            return Ok(book);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddBook(Book book)
+        {
+            await _bookRepository.AddBookAsync(book);
+            return CreatedAtAction(nameof(GetBookById), new { id = book.Id }, book);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateBook(int id, Book book)
+        {
+            if (id != book.Id)
+            {
+                return BadRequest();
+            }
+            await _bookRepository.UpdateBookAsync(book);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBook(int id)
+        {
+            await _bookRepository.DeleteBookAsync(id);
+            return NoContent();
+        }
     }
 }

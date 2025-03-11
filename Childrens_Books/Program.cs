@@ -2,6 +2,7 @@ using KidsBooks.Controllers;
 using KidsBooks.Data;
 using KidsBooks.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,8 +13,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Database connection
-builder.Services.AddDbContext<KidsBooks.Data.AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
+    ));
 
 // Register repository
 builder.Services.AddScoped<IBookRepository, BookRepository>();
