@@ -1,11 +1,11 @@
 CREATE DATABASE kids_books;
 use kids_books;
--- Database Schema and Table Creation
+
 
 CREATE SCHEMA IF NOT EXISTS Kids_books;
 USE Kids_books;
 
--- Users Table
+
 CREATE TABLE Users (
     Id INT PRIMARY KEY AUTO_INCREMENT,
     Username VARCHAR(255) UNIQUE NOT NULL,
@@ -13,7 +13,6 @@ CREATE TABLE Users (
     Email VARCHAR(255) UNIQUE NOT NULL
 );
 
--- Books Table
 CREATE TABLE Books (
     Id INT PRIMARY KEY AUTO_INCREMENT,
     Title VARCHAR(255) NOT NULL,
@@ -23,7 +22,7 @@ CREATE TABLE Books (
     Description TEXT
 );
 
--- BookPages Table (Related to Books)
+
 CREATE TABLE BookPages (
     Id INT PRIMARY KEY AUTO_INCREMENT,
     BookId INT NOT NULL,
@@ -33,7 +32,6 @@ CREATE TABLE BookPages (
     FOREIGN KEY (BookId) REFERENCES Books(Id) ON DELETE CASCADE
 );
 
--- Bookmarks Table (Related to Users and Books)
 CREATE TABLE Bookmarks (
     Id INT PRIMARY KEY AUTO_INCREMENT,
     UserId INT NOT NULL,

@@ -32,30 +32,5 @@ namespace KidsBooks.Controllers
             }
             return Ok(book);
         }
-
-        [HttpPost]
-        public async Task<ActionResult> AddBook(Book book)
-        {
-            await _bookRepository.AddBookAsync(book);
-            return CreatedAtAction(nameof(GetBookById), new { id = book.Id }, book);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBook(int id, Book book)
-        {
-            if (id != book.Id)
-            {
-                return BadRequest();
-            }
-            await _bookRepository.UpdateBookAsync(book);
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBook(int id)
-        {
-            await _bookRepository.DeleteBookAsync(id);
-            return NoContent();
-        }
     }
 }
