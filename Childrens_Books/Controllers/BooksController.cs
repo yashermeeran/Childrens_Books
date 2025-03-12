@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KidsBooks.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/books")]
     [ApiController]
     public class BooksController : ControllerBase
     {
@@ -31,6 +31,35 @@ namespace KidsBooks.Controllers
                 return NotFound();
             }
             return Ok(book);
+        }
+
+        [HttpGet("categories")]
+        public async Task<ActionResult<IEnumerable<string>>> GetAllCategories()
+        {
+            var categories = await _bookRepository.GetAllCategoriesAsync();
+            return Ok(categories);
+        }
+
+        [HttpGet("category")]
+        public async Task<ActionResult<IEnumerable<Book>>> GetBooksByCategory(string category)
+        {
+            var books = await _bookRepository.GetBooksByCategoryAsync(category);
+            if (!books.Any())
+            {
+                return NotFound("No books found in this category.");
+            }
+            return Ok(books);
+        }
+
+        [HttpGet("{id}/content")]
+        public async Task<ActionResult<string>> GetBookContent(int id, [FromQuery] int page = 1)
+        {
+            var content = await _bookRepository.GetBookContentAsync(id, page);
+            if (content == null)
+            {
+                return NotFound("No content found for this book page.");
+            }
+            return Ok(content);
         }
     }
 }
