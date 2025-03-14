@@ -36,7 +36,7 @@ namespace KidsBooks.Repositories
                 .ToListAsync();
 
             return categories
-                .Select((category, index) => new CategoryDto { Id = index + 1, Category = category }) 
+                .Select((category, index) => new CategoryDto { Id = index + 1, Category = category })
                 .ToList();
         }
 
@@ -45,9 +45,9 @@ namespace KidsBooks.Repositories
             var content = await _context.BookPages
                 .Where(bp => bp.BookId == bookId && bp.PageNumber == pageNumber)
                 .Select(bp => bp.Text)
-                .FirstOrDefaultAsync(); 
+                .FirstOrDefaultAsync();
 
-            return content ?? "No content found for this page."; 
+            return content ?? "No content found for this page.";
         }
     }
 }

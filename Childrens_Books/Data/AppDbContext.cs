@@ -8,11 +8,12 @@ namespace KidsBooks.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Book> Books { get; set; } = default!;
-        public DbSet<BookPage> BookPages { get; set; } = default!; 
+        public DbSet<BookPage> BookPages { get; set; } = default!;
+        public DbSet<Bookmarks> Bookmarks { get; set; } = default!; // Add this line
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Book>().Ignore(b => b.SomeProperty); 
+            modelBuilder.Entity<Book>().Ignore(b => b.SomeProperty);
         }
 
         private static string GetText(Book b)
