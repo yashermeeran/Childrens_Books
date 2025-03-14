@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KidsBooks.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/bookmarks")]
     [ApiController]
     public class BookmarksController : ControllerBase
     {
@@ -15,10 +15,10 @@ namespace KidsBooks.Controllers
             _bookmarksRepository = bookmarksRepository;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Bookmarks>>> GetUserBookmarks()
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<IEnumerable<Bookmarks>>> GetUserBookmarks(int userId)
         {
-            var bookmarks = await _bookmarksRepository.GetUserBookmarksAsync();
+            var bookmarks = await _bookmarksRepository.GetUserBookmarksAsync(userId);
             return Ok(bookmarks);
         }
     }

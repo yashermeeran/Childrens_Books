@@ -4,6 +4,6 @@ namespace KidsBooks.Repositories
 {
     public interface IBookmarksRepository
     {
-        Task<IEnumerable<Bookmarks>> GetUserBookmarksAsync();
+        Task<IEnumerable<Bookmarks>> GetUserBookmarksAsync(int userId);
     }
 }
