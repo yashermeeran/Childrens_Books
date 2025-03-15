@@ -12,7 +12,6 @@ namespace KidsBooks.Models
         [Required]
         public int BookId { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
         [ForeignKey("BookId")]
         public virtual Book Book { get; set; }
     }

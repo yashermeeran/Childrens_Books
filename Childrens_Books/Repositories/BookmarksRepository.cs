@@ -15,9 +15,10 @@ namespace KidsBooks.Repositories
 
         public async Task<IEnumerable<Bookmarks>> GetUserBookmarksAsync(int userId)
         {
-            return await _appDbContext.Set<Bookmarks>()
-                                      .Where(b => b.UserId == userId)
-                                      .ToListAsync();
+            return await _appDbContext.Bookmarks
+                .Where(b => b.UserId == userId)
+                .Include(b => b.Book)
+                .ToListAsync();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace KidsBooks.Controllers
         }
 
         [HttpGet("{userId}")]
-        public async Task<ActionResult<IEnumerable<Bookmarks>>> GetUserBookmarks(int userId)
+        public async Task<ActionResult<IEnumerable<Book>>> GetUserBookmarks(int userId)
         {
             var bookmarks = await _bookmarksRepository.GetUserBookmarksAsync(userId);
             return Ok(bookmarks);
