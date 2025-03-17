@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace KidsBooks.Models
 {
@@ -9,28 +11,16 @@ namespace KidsBooks.Models
         public int Id { get; set; }
 
         [Required]
-        public string Title { get; set; } = string.Empty;
+        public string Title { get; set; }
 
         [Required]
-        public string Author { get; set; } = string.Empty;
+        public string Author { get; set; }
 
         [Required]
-        public string Category { get; set; } = string.Empty;
+        public string Category { get; set; }
 
         public string? CoverImageUrl { get; set; }
 
         public string? Description { get; set; }
-
-        public virtual ICollection<BookPage> BookPages { get; set; } = new List<BookPage>();
-
-        [NotMapped] 
-        public string Text => GetText();
-
-        public object? SomeProperty { get; internal set; }
-
-        private string GetText()
-        {
-            return "Some text";
-        }
     }
 }

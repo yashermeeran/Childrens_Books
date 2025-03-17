@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using KidsBooks.Models;
+﻿using KidsBooks.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace KidsBooks.Data
 {
@@ -7,18 +7,28 @@ namespace KidsBooks.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<Book> Books { get; set; } = default!;
-        public DbSet<BookPage> BookPages { get; set; } = default!;
-        public DbSet<Bookmarks> Bookmarks { get; set; } = default!; // Add this line
+        public DbSet<Book> Books { get; set; }
+        public DbSet<BookPage> BookPages { get; set; }
+        public DbSet<Bookmarks> Bookmarks { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Book>().Ignore(b => b.SomeProperty);
-        }
+            base.OnModelCreating(modelBuilder);
 
-        private static string GetText(Book b)
-        {
-            return b.Text;
+            modelBuilder.Entity<Bookmarks>()
+                .HasOne<User>()
+                .WithMany()
+                .HasForeignKey(b => b.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
         }
     }
 }

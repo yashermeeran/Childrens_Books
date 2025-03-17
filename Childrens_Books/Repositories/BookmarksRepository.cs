@@ -17,8 +17,31 @@ namespace KidsBooks.Repositories
         {
             return await _appDbContext.Bookmarks
                 .Where(b => b.UserId == userId)
-                .Include(b => b.Book)
+                .Include(b => b.Book) 
                 .ToListAsync();
+        }
+
+        public async Task<Bookmarks> AddBookmarkAsync(Bookmarks bookmark)
+        {
+           
+            var existingBook = await _appDbContext.Books.FindAsync(bookmark.BookId);
+            if (existingBook == null)
+            {
+                throw new ArgumentException("Invalid BookId. The book does not exist.");
+            }
+
+            bookmark.Book = existingBook;
+            bookmark.CreatedAt = DateTime.UtcNow; 
+            _appDbContext.Bookmarks.Add(bookmark);
+            await _appDbContext.SaveChangesAsync();
+            return bookmark;
+        }
+
+        public async Task<Bookmarks> GetBookmarkByIdAsync(int id)
+        {
+            return await _appDbContext.Bookmarks
+                .Include(b => b.Book) 
+                .FirstOrDefaultAsync(b => b.Id == id);
         }
     }
 }
