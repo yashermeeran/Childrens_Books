@@ -2,14 +2,11 @@ using KidsBooks.Data;
 using KidsBooks.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 if (string.IsNullOrEmpty(connectionString))
@@ -22,9 +19,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookmarksRepository, BookmarksRepository>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>(); 
 
 var app = builder.Build();
-
 
 if (app.Environment.IsDevelopment())
 {
