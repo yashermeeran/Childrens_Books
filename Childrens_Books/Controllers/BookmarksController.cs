@@ -47,5 +47,16 @@ namespace KidsBooks.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBookmark(int id)
+        {
+            var result = await _bookmarksRepository.DeleteBookmarkAsync(id);
+            if (!result)
+            {
+                return NotFound("Bookmark not found.");
+            }
+            return NoContent();
+        }
+
     }
 }

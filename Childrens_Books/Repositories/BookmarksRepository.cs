@@ -43,5 +43,18 @@ namespace KidsBooks.Repositories
                 .Include(b => b.Book) 
                 .FirstOrDefaultAsync(b => b.Id == id);
         }
+        public async Task<bool> DeleteBookmarkAsync(int id)
+        {
+            var bookmark = await _appDbContext.Bookmarks.FindAsync(id);
+            if (bookmark == null)
+            {
+                return false;
+            }
+
+            _appDbContext.Bookmarks.Remove(bookmark);
+            await _appDbContext.SaveChangesAsync();
+            return true;
+        }
+
     }
 }
