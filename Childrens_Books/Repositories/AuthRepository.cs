@@ -22,13 +22,16 @@ namespace KidsBooks.Repositories
 
         public async Task<User> RegisterAsync(User user, string password)
         {
-            
             if (await _context.Users.AnyAsync(u => u.Email == user.Email))
             {
                 throw new ArgumentException("Email already exists.");
             }
 
-          
+            if (await _context.Users.AnyAsync(u => u.Username == user.Username))
+            {
+                throw new ArgumentException("Username already exists.");
+            }
+
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
 
             _context.Users.Add(user);
@@ -37,22 +40,42 @@ namespace KidsBooks.Repositories
         }
 
         public async Task<string> GenerateJwtTokenAsync(User user)
+{
+    var claims = new[]
+    {
+        new Claim("sub", user.Id.ToString()), 
+        new Claim("name", user.Username),
+        new Claim("email", user.Email), 
+        new Claim("admin", "true"), 
+        new Claim("iat", DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString())
+    };
+
+    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+    var token = new JwtSecurityToken(
+        issuer: _config["Jwt:Issuer"],
+        audience: _config["Jwt:Audience"],
+        claims: claims,
+        expires: DateTime.UtcNow.AddHours(1),
+        signingCredentials: creds
+    );
+
+    return await Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));
+}
+
+
+
+        public async Task<User> AuthenticateAsync(string username, string password)
         {
-            var claims = new[]
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Username == username);
+
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
             {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Name, user.Username)
-                };
+                return null;
+            }
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var token = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.UtcNow.AddHours(1),
-                signingCredentials: creds
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return user;
         }
 
         public Task RegisterAsync(User user)

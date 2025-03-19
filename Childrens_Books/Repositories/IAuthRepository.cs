@@ -8,5 +8,6 @@ namespace KidsBooks.Repositories
         Task<User> RegisterAsync(User user, string password);
         Task<string> GenerateJwtTokenAsync(User user);
         Task RegisterAsync(User user);
+        Task<User> AuthenticateAsync(string UserName, string password);
     }
 }
