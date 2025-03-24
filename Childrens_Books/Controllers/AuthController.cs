@@ -44,7 +44,6 @@ namespace KidsBooks.Controllers
             }
         }
 
-
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUserDto loginDto)
         {
@@ -56,7 +55,7 @@ namespace KidsBooks.Controllers
             }
 
             var token = await _authRepository.GenerateJwtTokenAsync(user);
-            return Ok(new { token });
+            return Ok(new { token, userId = user.Id });
         }
 
         private bool IsValidEmail(string email)
