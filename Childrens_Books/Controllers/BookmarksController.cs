@@ -55,7 +55,7 @@ namespace KidsBooks.Controllers
             {
                 return NotFound("Bookmark not found.");
             }
-            return NoContent();
+            return Ok(new { message = "Bookmark deleted successfully" });
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using KidsBooks.Models;
+﻿using KidsBooks.DTOs;
+using KidsBooks.Models;
 using KidsBooks.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,14 +53,25 @@ namespace KidsBooks.Controllers
         }
 
         [HttpGet("{id}/content")]
-        public async Task<ActionResult<string>> GetBookContent(int id, [FromQuery] int page = 1)
+        public async Task<ActionResult<BookContentDto>> GetBookContent(int id, [FromQuery] int page = 1)
         {
             var content = await _bookRepository.GetBookContentAsync(id, page);
             if (content == null)
             {
                 return NotFound("No content found for this book page.");
             }
-            return Ok(content);
+
+            var totalPages = await _bookRepository.GetTotalPagesAsync(id);
+
+            var bookContentDto = new BookContentDto
+            {
+                BookId = id,
+                PageNumber = page,
+                TotalPages = totalPages,
+                Content = content
+            };
+
+            return Ok(bookContentDto);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace KidsBooks.Repositories
 
         public async Task<Book?> GetBookByIdAsync(int id)
         {
-            return await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
+            return await _context.Books.FindAsync(id);
         }
 
         public async Task<IEnumerable<Book>> GetBooksByCategoryAsync(string category)
@@ -30,24 +30,24 @@ namespace KidsBooks.Repositories
 
         public async Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()
         {
-            var categories = await _context.Books
-                .Select(b => b.Category)
+            return await _context.Books
+                .Select(b => new CategoryDto { Category = b.Category })
                 .Distinct()
                 .ToListAsync();
-
-            return categories
-                .Select((category, index) => new CategoryDto { Id = index + 1, Category = category })
-                .ToList();
         }
 
         public async Task<string?> GetBookContentAsync(int bookId, int pageNumber)
         {
-            var content = await _context.BookPages
-                .Where(bp => bp.BookId == bookId && bp.PageNumber == pageNumber)
-                .Select(bp => bp.Text)
-                .FirstOrDefaultAsync();
+            var bookPage = await _context.BookPages
+                .FirstOrDefaultAsync(bp => bp.BookId == bookId && bp.PageNumber == pageNumber);
 
-            return content ?? "No content found for this page.";
+            return bookPage?.Text;
+        }
+
+        public async Task<int> GetTotalPagesAsync(int bookId)
+        {
+            return await _context.BookPages.CountAsync(bp => bp.BookId == bookId);
         }
     }
+ 
 }
