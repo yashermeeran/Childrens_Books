@@ -48,10 +48,10 @@ INSERT INTO Users (Username, PasswordHash, Email) VALUES
 ('alex_brown', 'hashed_password_3', 'alex@example.com');
 
 INSERT INTO Books (Title, Author, Category, CoverImageUrl, Description) VALUES
-('The Great Adventure', 'John Doe', 'Fiction', 'https://example.com/adventure.jpg', 'An exciting journey through uncharted lands.'),
-('Exploring the Universe', 'Jane Smith', 'Science', 'https://example.com/universe.jpg', 'A deep dive into the mysteries of space.'),
-('The World War Chronicles', 'Alan Turing', 'History', 'https://example.com/wwchronicles.jpg', 'A detailed account of historical wars.'),
-('Magical Realms', 'Emma Watson', 'Fantasy', 'https://example.com/magicrealms.jpg', 'A tale of magic, wizards, and mythical creatures.'),
+('The Great Adventure', 'John Doe', 'Fiction', https://picsum.photos/seed/book1/300/450, 'An exciting journey through uncharted lands.'),
+('Exploring the Universe', 'Jane Smith', 'Science', 'https://picsum.photos/seed/book2/300/450', 'A deep dive into the mysteries of space.'),
+('The World War Chronicles', 'Alan Turing', 'History', 'https://picsum.photos/seed/book3/300/450', 'A detailed account of historical wars.'),
+('Magical Realms', 'Emma Watson', 'Fantasy', 'https://picsum.photos/seed/book5/300/450', 'A tale of magic, wizards, and mythical creatures.'),
 ('Artificial Intelligence Today', 'Elon Gates', 'Technology', 'https://example.com/ai_today.jpg', 'The impact of AI on modern society.');
 
 INSERT INTO BookPages (BookId, PageNumber, Text, ImageUrl) VALUES
