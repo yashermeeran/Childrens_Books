@@ -7,7 +7,6 @@ namespace KidsBooks.Repositories
         Task<IEnumerable<Bookmarks>> GetUserBookmarksAsync(int userId);
         Task<Bookmarks> AddBookmarkAsync(Bookmarks bookmark);
         Task<bool> DeleteBookmarkAsync(int id);
-
-
+        Task<Bookmarks> UpdateBookmarkAsync(Bookmarks existingBookmark);
     }
 }

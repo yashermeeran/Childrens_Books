@@ -39,6 +39,16 @@ namespace KidsBooks.Controllers
 
             try
             {
+                var existingBookmarks = await _bookmarksRepository.GetUserBookmarksAsync(createBookmarkDto.UserId);
+                var existingBookmark = existingBookmarks.FirstOrDefault(b => b.BookId == createBookmarkDto.BookId);
+
+                if (existingBookmark != null)
+                {
+                    existingBookmark.PageNumber = createBookmarkDto.PageNumber;
+                    var updatedBookmark = await _bookmarksRepository.UpdateBookmarkAsync(existingBookmark);
+                    return Ok(updatedBookmark);
+                }
+
                 var createdBookmark = await _bookmarksRepository.AddBookmarkAsync(bookmark);
                 return CreatedAtAction(nameof(GetUserBookmarks), new { userId = createdBookmark.UserId }, createdBookmark);
             }

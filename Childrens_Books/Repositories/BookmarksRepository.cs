@@ -56,5 +56,9 @@ namespace KidsBooks.Repositories
             return true;
         }
 
+        public Task<Bookmarks> UpdateBookmarkAsync(Bookmarks existingBookmark)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

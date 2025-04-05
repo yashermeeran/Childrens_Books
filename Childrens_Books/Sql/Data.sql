@@ -51,8 +51,20 @@ INSERT INTO Books (Title, Author, Category, CoverImageUrl, Description) VALUES
 ('The Great Adventure', 'John Doe', 'Fiction', https://picsum.photos/seed/book1/300/450, 'An exciting journey through uncharted lands.'),
 ('Exploring the Universe', 'Jane Smith', 'Science', 'https://picsum.photos/seed/book2/300/450', 'A deep dive into the mysteries of space.'),
 ('The World War Chronicles', 'Alan Turing', 'History', 'https://picsum.photos/seed/book3/300/450', 'A detailed account of historical wars.'),
-('Magical Realms', 'Emma Watson', 'Fantasy', 'https://picsum.photos/seed/book5/300/450', 'A tale of magic, wizards, and mythical creatures.'),
-('Artificial Intelligence Today', 'Elon Gates', 'Technology', 'https://example.com/ai_today.jpg', 'The impact of AI on modern society.');
+('Magical Realms', 'Emma Watson', 'Fantasy', 'https://picsum.photos/seed/book4/300/450', 'A tale of magic, wizards, and mythical creatures.'),
+('Artificial Intelligence', 'Elon Gates', 'Technology', 'https://picsum.photos/seed/book5/300/450', 'Lily was a little girl who loved to paint. One day, she found an old paintbrush in her grandmother’s attic. It had golden bristles that shimmered in the light. As soon as she touched it, the brush started to glow!
+
+"Wow!" Lily whispered. She dipped the brush into her paint and made a tiny bluebird on the canvas. Suddenly, the bluebird flapped its wings and flew away!
+
+Her eyes widened. "Did that just... come to life xcited, Lily painted a small orange cat. The cat blinked its bright green eyes and jumped off the page, purring loudly.
+
+"This is amazing!" Lily laughed. She painted a garden full of flowers, and soon, the air was filled with the sweet scent of blossoms.
+
+But then, she had an idea. "What if I paint something really special?"
+
+With a careful hand, she painted a magical door. As soon as she finished, the door creaked open, and a voice whispered, "Step inside if you dare..."
+
+What would Lily find behind the door.');
 
 INSERT INTO BookPages (BookId, PageNumber, Text, ImageUrl) VALUES
 (1, 1, 'Once upon a time in a land far away...', 'https://example.com/adventure_page1.jpg'),
